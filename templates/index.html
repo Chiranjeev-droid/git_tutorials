@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block body %}
+
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{%if messages %}
+{% for category,message in messages %}
+<div class="alert alert-{{category}} alert-dismissible fade show" role="alert">
+  {{message}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+<!-- Todo: Fetch it using for loop from the database -->
+{% for post in posts %}
+<span class="border border-danger">
+  <div class="card">
+    <img
+      src="https://images.unsplash.com/photo-1540206395-68808572332f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60"
+      class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">{{post.title}}</h5>
+      <h5 class="card-subtitle">{{ post.subtitle }}
+      </h5>
+      <p class="card-text"> {{post.content}}</p>
+      <p class="post-meta">Posted by
+        <a>Anonymous</a>
+        on{{post.date}}</p>
+      <h6 class="helpful">Was This Post helpful
+      </h6>
+      <form name="sentMessage" id="helpfulForm" action="/useful/{{post.sno}}" method="post" novalidate>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label class=" btn btn-outline-success active">
+            <input type="radio" name="useful" id="yes" value="yes" checked> Yes
+          </label>
+          <label class="btn btn-outline-danger">
+            <input type="radio" name="useful" id="no" value="no"> No
+        </div>
+      </form>
+
+</span>
+<hr>
+</div>
+</div>
+
+{% endfor %}
+{% endblock %}
